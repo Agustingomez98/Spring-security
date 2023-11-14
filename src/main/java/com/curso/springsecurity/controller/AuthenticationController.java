@@ -2,7 +2,7 @@ package com.curso.springsecurity.controller;
 
 import com.curso.springsecurity.dto.auth.AuthenticationResponse;
 import com.curso.springsecurity.dto.auth.Login;
-import com.curso.springsecurity.entities.User;
+import com.curso.springsecurity.entities.security.User;
 import com.curso.springsecurity.service.auth.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

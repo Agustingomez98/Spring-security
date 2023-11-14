@@ -4,7 +4,7 @@ import com.curso.springsecurity.dto.RegisteredUser;
 import com.curso.springsecurity.dto.SaveUser;
 import com.curso.springsecurity.dto.auth.AuthenticationResponse;
 import com.curso.springsecurity.dto.auth.Login;
-import com.curso.springsecurity.entities.User;
+import com.curso.springsecurity.entities.security.User;
 import com.curso.springsecurity.exception.NotFoundException;
 import com.curso.springsecurity.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class AuthenticationService {
         userDto.setId(user.getId());
         userDto.setFullName(user.getFullName());
         userDto.setEmail(user.getEmail());
-        userDto.setRole(user.getRole().name());
+        userDto.setRole(user.getRole().getName());
 
         String jwt = jwtService.generateToken(user,generateExtraClaims(user));
         userDto.setJwt(jwt);
@@ -45,7 +45,7 @@ public class AuthenticationService {
     private Map<String, Object> generateExtraClaims(User user) {
         Map<String,Object> extraClaims = new HashMap<>();
         extraClaims.put("full name",user.getFullName());
-        extraClaims.put("role",user.getRole().name());
+        extraClaims.put("role",user.getRole().getName());
         extraClaims.put("authorities",user.getAuthorities());
         return extraClaims;
     }

@@ -1,6 +1,6 @@
 package com.curso.springsecurity.repositories;
 
-import com.curso.springsecurity.entities.User;
+import com.curso.springsecurity.entities.security.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

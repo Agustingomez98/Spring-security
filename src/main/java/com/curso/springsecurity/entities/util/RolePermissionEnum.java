@@ -1,6 +1,6 @@
 package com.curso.springsecurity.entities.util;
 
-public enum RolePermission {
+public enum RolePermissionEnum {
 
     READ_ALL_PRODUCTS,
     READ_ONE_PRODUCT,
@@ -12,7 +12,7 @@ public enum RolePermission {
     CREATE_ONE_CATEGORY,
     UPDATE_ONE_CATEGORY,
     DISABLE_ONE_CATEGORY,
-    READ_MY_PROFILE;
+    READ_MY_PROFILE
 
 
 }

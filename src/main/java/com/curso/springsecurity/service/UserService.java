@@ -1,7 +1,7 @@
 package com.curso.springsecurity.service;
 
 import com.curso.springsecurity.dto.SaveUser;
-import com.curso.springsecurity.entities.User;
+import com.curso.springsecurity.entities.security.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

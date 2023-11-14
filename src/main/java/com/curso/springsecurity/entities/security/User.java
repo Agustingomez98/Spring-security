@@ -1,6 +1,5 @@
-package com.curso.springsecurity.entities;
+package com.curso.springsecurity.entities.security;
 
-import com.curso.springsecurity.entities.util.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +30,8 @@ public class User implements UserDetails { //Importante esta implementacion, ya 
     private String fullName;
     private String password;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "role_id")
     private Role role;
 
 
@@ -42,12 +42,11 @@ public class User implements UserDetails { //Importante esta implementacion, ya 
        if (role.getPermissions()==null) return null;
 
        List<SimpleGrantedAuthority> authorities = role.getPermissions().stream()
-               .map(each ->{
-                   String permission = each.name();
-                   return new SimpleGrantedAuthority(permission);
-               }).collect(Collectors.toList());
+               .map(each -> each.getOperation().getName())
+               .map(each -> new SimpleGrantedAuthority(each)
+               ).collect(Collectors.toList());
 
-       authorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
+       authorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.getName()));
        return authorities;
     }
 
