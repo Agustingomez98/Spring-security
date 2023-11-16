@@ -1,9 +1,11 @@
 package com.curso.springsecurity.controller;
 
+import com.curso.springsecurity.dto.LogoutResponse;
 import com.curso.springsecurity.dto.auth.AuthenticationResponse;
 import com.curso.springsecurity.dto.auth.Login;
 import com.curso.springsecurity.entities.security.User;
 import com.curso.springsecurity.service.auth.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,13 @@ public class AuthenticationController {
 
         return ResponseEntity.ok(response);
 
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<LogoutResponse> logout (HttpServletRequest request){
+
+        authenticationService.logout(request);
+        return ResponseEntity.ok(new LogoutResponse("Logout succesfull"));
     }
 
     @GetMapping("/validate")
