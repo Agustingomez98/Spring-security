@@ -19,6 +19,7 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
 
+    //@CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login (@RequestBody @Valid Login login){
 

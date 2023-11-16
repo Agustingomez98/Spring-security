@@ -18,6 +18,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity //Activa y configura componentes de manera predeterminada
@@ -41,6 +48,7 @@ public class HttpSecurityConfig {
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception { //HttpSecurity permite personalizar como se van a gestionar y proteger las solicitudes http (autorizar rutas,agregar roles,configurar cierto filtros y sus ordenes)
 
         SecurityFilterChain  securityFilterChain = http
+                .cors(withDefaults())
                 .csrf(csrfConfig -> csrfConfig.disable())
                 .sessionManagement(sessMagConfig -> sessMagConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //Se configura el tipo de sesion que vamos a tener. Recibe una enumeracion, se elige STATELESS que define que es una aplicacion sin estado.Esa enumeracion representa diferentes politicas para la creacion de sesiones.
                 .authenticationProvider(daoAuthenticationProvider) //Configura la estrategia de autenticacion
@@ -113,6 +121,20 @@ public class HttpSecurityConfig {
             authReqConfig.anyRequest().authenticated();
         };
     }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("https://google.com")); //Configuracion de los origenes de la peticion
+        configuration.setAllowedMethods(Arrays.asList("*")); //Configuracion de los metodos que van a estar permitidos (GET,POST,etc)
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true); //Si acepta cookies como session id en caso de usar sesiones o el bearer token
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
 
     //Para authorizacion con anotaciones (metodos seguros)
     private static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> RequestMatchersV2() {

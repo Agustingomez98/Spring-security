@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-
+/*@CrossOrigin*/
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -29,6 +29,8 @@ public class ProductController {
         return ResponseEntity.notFound().build();
     }
 
+
+    //@CrossOrigin(origins = "https://www.google.com")
     @GetMapping("{id}")
     public ResponseEntity<Product> findById(@PathVariable Long id){
         Optional<Product> product = productService.findById(id);
